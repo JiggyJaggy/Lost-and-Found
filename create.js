@@ -18,6 +18,13 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Email domain validation
+        const domain = "@usc.edu.ph";
+        if (!email.endsWith(domain)) {
+            alert(`Email must end with ${domain}`);
+            return;
+        }
+
         // Get existing users from localStorage or initialize an empty array
         const users = JSON.parse(localStorage.getItem("users")) || [];
 

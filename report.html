@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost and Found Report Form</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Form Styles */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, textarea, select {
+            margin-bottom: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #ff6347; /* Tomato red */
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #e5533d;
+        }
+
+        /* Image preview */
+        #image-preview {
+            display: block;
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 600px) {
+            .form-container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+        <h2>Lost and Found Report Form</h2>
+        <form id="report-form">
+            <label for="name">Your Full Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Your Email Address:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="item-found">Item Found/Lost:</label>
+            <input type="text" id="item-found" name="item-found" required>
+
+            <label for="item-description">Description of the Item:</label>
+            <textarea id="item-description" name="item-description" rows="6" required></textarea>
+
+            <label for="location">Location (Where was the item found/lost?):</label>
+            <input type="text" id="location" name="location" required>
+
+            <label for="date">Date (When was the item found/lost?):</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" required>
+                <option value="found">Found</option>
+                <option value="lost">Lost</option>
+            </select>
+
+            <label for="additional-info">Additional Information (Optional):</label>
+            <textarea id="additional-info" name="additional-info" rows="4"></textarea>
+
+            <!-- New File Input for Image -->
+            <label for="image">Upload Image (Optional):</label>
+            <input type="file" id="image" name="image" accept="image/*">
+
+            <!-- Image Preview -->
+            <img id="image-preview" src="" alt="Image Preview" style="display: none;">
+
+            <button type="submit">Submit Report</button>
+        </form>
+
+        <div id="success-message" style="display: none; margin-top: 20px; color: green;">
+            <p>Thank you! Your report has been saved.</p>
+        </div>
+    </div>
+    <script src="report.js"></script>
+</body>
+</html>
