@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Items | USC Lost & Found</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+    <header>
+        <nav class="navbar">
+            <div class="logo">USC Lost & Found</div>
+            <ul class="nav-links">
+                <li><a href="Website for final project index.html">Home</a></li>
+                <li><a href="search.html" class="active">Search</a></li>
+                <li><a href="report.html">Report</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">USC Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="search-section">
+        <h1>Search Lost & Found Items</h1>
+        <form id="searchForm" class="search-form">
+            <input type="text" id="searchInput" placeholder="Enter item name, description, or location...">
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="searchResults" class="search-results">
+            <!-- Search results will appear here -->
+        </div>
+    </section>
+
+    <script src="search.js"></script>
+
+</body>
+</html>
