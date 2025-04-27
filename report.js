@@ -1,53 +1,67 @@
+const reportForm = document.getElementById('report-form');
+const imageInput  = document.getElementById('image');
+const imagePreview = document.getElementById('image-preview');
+const successMessage = document.getElementById('success-message');
 
-        // Function to handle image preview when the user selects a file
-        document.getElementById('image').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                const imagePreview = document.getElementById('image-preview');
-                imagePreview.src = e.target.result;
-                imagePreview.style.display = 'block'; // Show the preview image
-            };
-            
-            if (file) {
-                reader.readAsDataURL(file); // Read the image file
-            } else {
-                document.getElementById('image-preview').style.display = 'none'; // Hide preview if no file selected
-            }
-        });
+// 1. Preview the image on select
+imageInput.addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) {
+    imagePreview.style.display = 'none';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    imagePreview.src = e.target.result;
+    imagePreview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+});
 
-        // Function to save form data to localStorage
-        document.getElementById('report-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
-            
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                itemFound: document.getElementById('item-found').value,
-                itemDescription: document.getElementById('item-description').value,
-                location: document.getElementById('location').value,
-                date: document.getElementById('date').value,
-                status: document.getElementById('status').value,
-                additionalInfo: document.getElementById('additional-info').value,
-                image: document.getElementById('image').files[0] ? document.getElementById('image').files[0].name : null // Save image file name
-            };
+// 2. Handle form submission
+reportForm.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-            // Save to localStorage
-            localStorage.setItem('lostAndFoundReport', JSON.stringify(formData));
+  const file = imageInput.files[0];
+  if (file) {
+    // Read file as Base64 then save
+    const reader = new FileReader();
+    reader.onload = evt => saveReport(evt.target.result);
+    reader.readAsDataURL(file);
+  } else {
+    // No image uploaded
+    saveReport('');
+  }
+});
 
-            // Show a success message
-            document.getElementById('success-message').style.display = 'block';
+function saveReport(imageBase64) {
+  // Gather all form values
+  const newReport = {
+    name:            document.getElementById('name').value,
+    email:           document.getElementById('email').value,
+    itemFound:       document.getElementById('item-found').value,
+    itemDescription: document.getElementById('item-description').value,
+    location:        document.getElementById('location').value,
+    date:            document.getElementById('date').value,
+    status:          document.getElementById('status').value,
+    additionalInfo:  document.getElementById('additional-info').value,
+    image:           imageBase64
+  };
 
-            // Clear the form fields (optional)
-            document.getElementById('report-form').reset();
-            document.getElementById('image-preview').style.display = 'none'; // Hide image preview
-        });
+  // Load existing array or start fresh
+  const existing = JSON.parse(localStorage.getItem('foundItems')) || [];
+  existing.push(newReport);
+  localStorage.setItem('foundItems', JSON.stringify(existing));
 
-        // Load and display stored report data (if any)
-        window.addEventListener('load', function() {
-            const storedReport = JSON.parse(localStorage.getItem('lostAndFoundReport'));
-            if (storedReport) {
-                console.log('Stored Report:', storedReport); // For debugging purposes
-            }
-        });
+  // Show success, then redirect immediately
+  successMessage.style.display = 'block';
+
+  // Short delay so user sees the message (optional)
+  setTimeout(() => {
+    window.location.href = "Website for final project index.html";
+  }, 800);
+  
+  // Reset form
+  reportForm.reset();
+  imagePreview.style.display = 'none';
+}
