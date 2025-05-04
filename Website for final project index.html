@@ -623,50 +623,46 @@
     
     <section class="section dark">
         <div class="container">
-            <h2 class="title">Recently Reported Items</h2>
-            <div class="grid">
-                <div class="card item">
-                    <div class="status lost-tag">Lost</div>
-                    <div class="img-box">
-                        <img src="https://via.placeholder.com/300x180?text=Water+Bottle" alt="Blue Water Bottle">
-                    </div>
-                    <div class="item-content">
-                        <h3>Blue Water Bottle</h3>
-                        <p>Lost in Main Library</p>
-                        <p style="color:#999;font-size:14px">April 10, 2023</p>
-                    </div>
-                    <div class="qr">📱</div>
-                </div>
-                <div class="card item">
-                    <div class="status found-tag">Found</div>
-                    <div class="img-box">
-                        <img src="https://via.placeholder.com/300x180?text=Student+ID" alt="USC Student ID">
-                    </div>
-                    <div class="item-content">
-                        <h3>USC Student ID</h3>
-                        <p>Found near Cafeteria</p>
-                        <p style="color:#999;font-size:14px">April 9, 2023</p>
-                    </div>
-                    <div class="qr">📱</div>
-                </div>
-                <div class="card item">
-                    <div class="status lost-tag">Lost</div>
-                    <div class="img-box">
-                        <img src="https://via.placeholder.com/300x180?text=Laptop+Bag" alt="Black Laptop Bag">
-                    </div>
-                    <div class="item-content">
-                        <h3>Black Laptop Bag</h3>
-                        <p>Lost in Computer Lab</p>
-                        <p style="color:#999;font-size:14px">April 8, 2023</p>
-                    </div>
-                    <div class="qr">📱</div>
-                </div>
-            </div>
-            <div style="text-align:center;margin-top:30px">
-                <a href="#" class="btn secondary">View All Items</a>
-            </div>
+          <h2 class="title">Recently Reported Items</h2>
+          <div class="grid" id="recentItemsGrid"></div>
+          <div style="text-align:center;margin-top:30px">
+            <a href="search.html" class="btn secondary">View All Items</a>
+          </div>
         </div>
-    </section>
+      </section>
+      
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const grid = document.getElementById("recentItemsGrid");
+          const items = JSON.parse(localStorage.getItem("foundItems")) || [];
+      
+          if (items.length === 0) {
+            grid.innerHTML = "<p style='color: #ccc'>No recently reported items.</p>";
+            return;
+          }
+      
+          // Show only the 3 most recent items
+          items.slice(-3).reverse().forEach(item => {
+            const card = document.createElement("div");
+            card.className = "card item";
+            card.innerHTML = `
+              <div class="status ${item.status === "Lost" ? "lost-tag" : "found-tag"}">${item.status}</div>
+              <div class="img-box">
+                  <img src="${item.image}" alt="${item.itemFound}">
+              </div>
+              <div class="item-content">
+                  <h3>${item.itemFound}</h3>
+                  <p>${item.status} in ${item.location}</p>
+                  <p style="color:#999;font-size:14px">${item.date}</p>
+              </div>
+              <div class="qr">📱</div>
+            `;
+            grid.appendChild(card);
+          });
+        });
+      </script>
+      
 
     
     <section class="section dark">
