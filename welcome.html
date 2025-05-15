@@ -1,0 +1,201 @@
+<!-- welcome.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Lost & Found</title>
+    <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+    <nav class="navbar">
+        <h1>Welcome, <span id="username">User</span>!</h1>
+        <div>
+            <a href="welcome.html">Home</a>
+            <a href="report.html">Report Item</a>
+            <a href="display.html">Display</a>
+            <a href="profile.html">Profile</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <main class="welcome-content">
+        <h2>Thanks for signing up!</h2>
+        <p>Explore the platform to report or find lost items.</p>
+        <a href="report.html" class="btn">Report an Item</a>
+        <a href="items.html" class="btn secondary">Browse Items</a>
+    </main>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="title">How It Works</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>Report Lost Items</h3>
+                    <p>Quickly submit a report when you've lost something important.</p>
+                </div>
+                <div class="card">
+                    <h3>View Found Listings</h3>
+                    <p>Check if someone has already found and reported your item.</p>
+                </div>
+                <div class="card">
+                    <h3>Get Notifications</h3>
+                    <p>Stay updated when your item's status changes or is matched.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 class="title">Campus Map</h2>
+        <p style="text-align:center;margin-bottom:20px;">
+            See where items were lost or found
+        </p>
+
+        <!-- Interactive Map Replacing Static Image -->
+        <div class="map" id="map">
+            <div class="map-text">
+                <h3>Interactive Campus Map</h3>
+                <p>Click on pins to see details of lost and found items</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let map;
+        let markers = [];
+
+        function initMap() {
+            const uscTalamban = { lat: 10.3540807, lng: 123.9119719 };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: uscTalamban,
+                zoom: 17,
+            });
+
+            loadMarkers();
+
+            map.addListener("click", (event) => {
+                const description = prompt("Enter a description for this pin (e.g. 'Lost bag', 'Found phone'):");
+                if (description) {
+                    addMarker(event.latLng, description);
+                    saveMarkers();
+                }
+            });
+        }
+
+        function addMarker(location, description) {
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+            });
+
+            const infowindow = new google.maps.InfoWindow({
+                content: `<b>${description}</b>`,
+            });
+
+            marker.addListener("click", () => {
+                infowindow.open(map, marker);
+                if (confirm("Remove this pin?")) {
+                    marker.setMap(null);
+                    markers = markers.filter(m => m.marker !== marker);
+                    saveMarkers();
+                }
+            });
+
+            markers.push({ marker, description });
+        }
+
+        function saveMarkers() {
+            const savedData = markers.map(m => ({
+                lat: m.marker.getPosition().lat(),
+                lng: m.marker.getPosition().lng(),
+                description: m.description
+            }));
+            localStorage.setItem('savedMarkers', JSON.stringify(savedData));
+        }
+
+        function loadMarkers() {
+            const saved = JSON.parse(localStorage.getItem('savedMarkers'));
+            if (saved) {
+                saved.forEach(data => {
+                    addMarker(new google.maps.LatLng(data.lat, data.lng), data.description);
+                });
+            }
+        }
+    </script>
+
+    <!-- Load Google Maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD65pmryXcD_UXkkAN5DNdfESJhLkVwB2w&callback=initMap"></script>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="title">Next Steps</h2>
+            <div class="grid">
+                <a href="report.html" class="card link-card">
+                    <h3>Report an Item →</h3>
+                    <p>Submit a new lost or found item report.</p>
+                </a>
+                <a href="profile.html" class="card link-card">
+                    <h3>Your Profile →</h3>
+                    <p>View your submissions and updates.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const currentUser = users[users.length - 1];
+        document.getElementById("username").textContent = currentUser.name;
+    </script>
+
+    <section class="section dark">
+        <div class="container">
+            <h2 class="title">Recently Reported Items</h2>
+            <div class="grid" id="recentItemsGrid"></div>
+            <div style="text-align:center;margin-top:30px">
+                <a href="display.html" class="btn secondary">View All Items</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const grid = document.getElementById("recentItemsGrid");
+            const items = JSON.parse(localStorage.getItem("foundItems")) || [];
+
+            if (items.length === 0) {
+                grid.innerHTML = "<p style='color: #ccc'>No recently reported items.</p>";
+                return;
+            }
+
+            items.slice(-3).reverse().forEach(item => {
+                const card = document.createElement("div");
+                card.className = "card item";
+                card.innerHTML = `
+                    <div class="status ${item.status === "Lost" ? "lost-tag" : "found-tag"}">${item.status}</div>
+                    <div class="img-box">
+                        <img src="${item.image}" alt="${item.itemFound}">
+                    </div>
+                    <div class="item-content">
+                        <h3>${item.itemFound}</h3>
+                        <p>${item.status} in ${item.location}</p>
+                        <p style="color:#999;font-size:14px">${item.date}</p>
+                    </div>
+                    <div class="qr">📱</div>
+                `;
+                grid.appendChild(card);
+            });
+        });
+    </script>
+
+    <!-- 🔐 Logout Function -->
+    <script>
+        function logout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = "index.html"; // change if your login file is named differently
+        }
+    </script>
+</body>
+</html>

@@ -38,6 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Users stored in localStorage:", users);
 
         alert("Account Created!");
-        window.location.href = "login.html"; // Redirect to login page after signup
+        window.location.href = "welcome.html"; // Redirect to login page after signup
     });
 });

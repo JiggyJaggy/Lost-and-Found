@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile - Lost & Found</title>
+    <link rel="stylesheet" href="welcome.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <a href="index.html">Lost & Found</a>
+            </div>
+            <ul class="nav-links">
+              <a href="welcome.html">Home</a>
+               <a href="report.html">Report</a>
+                <a href="display.html">Items</a>
+                <a href="profile.html" class="active">Profile</a>
+                <a href="#" onclick="logout()">Logout</a>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Profile Info -->
+    <section class="features">
+        <div class="container">
+            <h2 class="title">Welcome, <span id="profileName">User</span></h2>
+            <p>Your recent activity and reported items are listed below.</p>
+        </div>
+    </section>
+
+    <!-- Reported Items Section -->
+    <section class="section dark">
+        <div class="container">
+            <h2 class="title">Your Reported Items</h2>
+            <div class="grid" id="userItemsGrid"></div>
+        </div>
+    </section>
+
+    <script>
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const currentUser = users.length > 0 ? users[users.length - 1] : null;
+
+    if (currentUser) {
+        document.getElementById("profileName").textContent = currentUser.name;
+
+        const items = JSON.parse(localStorage.getItem("foundItems")) || [];
+        const userItems = items.filter(item =>
+            item.userId === currentUser.id || item.reportedBy === currentUser.name
+        );
+
+        const grid = document.getElementById("userItemsGrid");
+
+        if (userItems.length === 0) {
+            grid.innerHTML = "<p style='color:#999'>You haven’t reported any items yet.</p>";
+        } else {
+            userItems.slice().reverse().forEach(item => {
+                const card = document.createElement("div");
+                card.className = "card item";
+                card.innerHTML = `
+                    <div class="status ${item.status === "Lost" ? "lost-tag" : "found-tag"}">${item.status}</div>
+                    <div class="img-box">
+                        <img src="${item.image}" alt="${item.itemFound}">
+                    </div>
+                    <div class="item-content">
+                        <h3>${item.itemFound}</h3>
+                        <p>${item.status} in ${item.location}</p>
+                        <p style="color:#999;font-size:14px">${item.date}</p>
+                    </div>
+                    <div class="qr">📱</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    } else {
+        // Optional: redirect to login if no user is found
+        alert("No logged-in user found. Redirecting to login...");
+        window.location.href = "index.html";
+    }
+
+    function logout() {
+        // Clear local/session storage
+        localStorage.clear();
+        sessionStorage.clear();
+
+        // Redirect to homepage or login
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
+
+
+
+    </script>
+</body>
+</html>

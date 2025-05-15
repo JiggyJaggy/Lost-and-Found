@@ -58,7 +58,7 @@ function saveReport(imageBase64) {
 
   // Short delay so user sees the message (optional)
   setTimeout(() => {
-    window.location.href = "Website for final project index.html";
+    window.location.href = "Welcome.html";
   }, 800);
   
   // Reset form

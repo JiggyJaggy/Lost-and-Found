@@ -601,24 +601,91 @@
         </div>
     </section>
 
+    <div class="container">
+        <h2 class="title">Campus Map</h2>
+        <p style="text-align:center;margin-bottom:20px;">
+          See where items were lost or found
+        </p>
     
-    <section class="section light">
-        <div class="container">
-            <h2 class="title">Campus Map</h2>
-            <p style="text-align:center;margin-bottom:20px;">See where items were lost or found</p>
-            <div class="map">
-                <img src="https://via.placeholder.com/1200x600?text=USC+Campus+Map" alt="USC Campus Map">
-                <div class="map-text">
-                    <h3>Interactive Campus Map</h3>
-                    <p>Click on pins to see details of lost and found items</p>
-                </div>
-                <div class="pin red" style="top:40%;left:45%"></div>
-                <div class="pin green" style="top:55%;left:60%"></div>
-                <div class="pin red" style="top:30%;left:70%"></div>
-                <div class="pin green" style="top:60%;left:30%"></div>
-            </div>
+        <!-- Interactive Map Replacing Static Image -->
+        <div class="map" id="map">
+          <div class="map-text">
+            <h3>Interactive Campus Map</h3>
+            <p>Click on pins to see details of lost and found items</p>
+          </div>
         </div>
+      </div>
     </section>
+    
+    <script>
+        let map;
+        let markers = [];
+      
+        function initMap() {
+          const uscTalamban = { lat: 10.3540807, lng: 123.9119719 };
+      
+          map = new google.maps.Map(document.getElementById("map"), {
+            center: uscTalamban,
+            zoom: 17,
+          });
+      
+          loadMarkers();
+      
+          map.addListener("click", (event) => {
+            const description = prompt("Enter a description for this pin (e.g. 'Lost bag', 'Found phone'):");
+            if (description) {
+              addMarker(event.latLng, description);
+              saveMarkers();
+            }
+          });
+        }
+      
+        function addMarker(location, description) {
+          const marker = new google.maps.Marker({
+            position: location,
+            map: map,
+          });
+      
+          const infowindow = new google.maps.InfoWindow({
+            content: `<b>${description}</b>`,
+          });
+      
+          marker.addListener("click", () => {
+            infowindow.open(map, marker);
+            if (confirm("Remove this pin?")) {
+              marker.setMap(null);
+              markers = markers.filter(m => m.marker !== marker);
+              saveMarkers();
+            }
+          });
+      
+          markers.push({ marker, description });
+        }
+      
+        function saveMarkers() {
+          const savedData = markers.map(m => ({
+            lat: m.marker.getPosition().lat(),
+            lng: m.marker.getPosition().lng(),
+            description: m.description
+          }));
+          localStorage.setItem('savedMarkers', JSON.stringify(savedData));
+        }
+      
+        function loadMarkers() {
+          const saved = JSON.parse(localStorage.getItem('savedMarkers'));
+          if (saved) {
+            saved.forEach(data => {
+              addMarker(new google.maps.LatLng(data.lat, data.lng), data.description);
+            });
+          }
+        }
+      </script>
+      
+      <!-- Load Google Maps -->
+      <script async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD65pmryXcD_UXkkAN5DNdfESJhLkVwB2w&callback=initMap">
+      </script>
 
     
     <section class="section dark">
@@ -626,7 +693,7 @@
           <h2 class="title">Recently Reported Items</h2>
           <div class="grid" id="recentItemsGrid"></div>
           <div style="text-align:center;margin-top:30px">
-            <a href="search.html" class="btn secondary">View All Items</a>
+            <a href="display.html" class="btn secondary">View All Items</a>
           </div>
         </div>
       </section>

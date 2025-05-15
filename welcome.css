@@ -1,0 +1,241 @@
+/* styles/welcome.css */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.navbar {
+    background-color: #7b1f2d;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 500;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+main.welcome-content {
+    max-width: 600px;
+    margin: 100px auto 0;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.welcome-content h2 {
+    color: #7b1f2d;
+    margin-bottom: 20px;
+}
+
+.welcome-content p {
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #7b1f2d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #5a1520;
+}
+
+.btn.secondary {
+    background-color: #ccc;
+    color: #333;
+}
+
+.btn.secondary:hover {
+    background-color: #bbb;
+}
+
+
+
+.features, .cta-section {
+    padding: 60px 20px;
+    background-color: #fefefe;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    text-align: center;
+}
+
+.title {
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #7b1f2d;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    width: 280px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.link-card {
+    text-align: left;
+    color: inherit;
+    text-decoration: none;
+    border: 2px solid #7b1f2d;
+}
+
+.link-card h3 {
+    color: #7b1f2d;
+}
+
+.link-card:hover {
+    background-color: #f9e6ea;
+}
+
+.map {
+    height: 400px;
+    background: #e9ecef;
+    border-radius: 8px;
+    position: relative;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.map img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+}
+
+.map-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    background: rgba(255,255,255,0.9);
+    padding: 30px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+}
+.section.dark {
+    background-color: #f4f4f4;
+    padding: 60px 20px;
+}
+
+.section.dark .title {
+    color: #7b1f2d;
+}
+
+.card.item {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    width: 260px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    position: relative;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.card.item:hover {
+    transform: translateY(-5px);
+}
+
+.card.item .img-box {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.card.item .img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card.item .item-content h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.card.item .item-content p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.status {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #7b1f2d;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status.lost-tag {
+    background-color: #c62828;
+}
+
+.status.found-tag {
+    background-color: #2e7d32;
+}
+
+.qr {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    font-size: 20px;
+    color: #aaa;
+}
