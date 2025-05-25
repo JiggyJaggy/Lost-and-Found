@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="welcome.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">
@@ -22,7 +21,6 @@
         </div>
     </nav>
 
-    <!-- Profile Info -->
     <section class="features">
         <div class="container">
             <h2 class="title">Welcome, <span id="profileName">User</span></h2>
@@ -30,7 +28,6 @@
         </div>
     </section>
 
-    <!-- Reported Items Section -->
     <section class="section dark">
         <div class="container">
             <h2 class="title">Your Reported Items</h2>
@@ -74,25 +71,18 @@
             });
         }
     } else {
-        // Optional: redirect to login if no user is found
         alert("No logged-in user found. Redirecting to login...");
         window.location.href = "index.html";
     }
 
     function logout() {
-        // Clear local/session storage
         localStorage.clear();
         sessionStorage.clear();
 
-        // Redirect to homepage or login
+    
         window.location.href = "index.html";
     }
 </script>
 </body>
 </html>
 
-
-
-    </script>
-</body>
-</html>

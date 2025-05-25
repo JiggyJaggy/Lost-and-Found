@@ -16,7 +16,7 @@ body {
     text-align: center;
 }
 h2 {
-    color: #914d47;
+    color: #800000;
 }
 input {
     width: 100%;
@@ -26,7 +26,7 @@ input {
     border-radius: 5px;
 }
 .btn {
-    background-color: #914d47;
+    background-color: #800000;
     color: white;
     border: none;
     padding: 10px;
@@ -35,7 +35,7 @@ input {
     cursor: pointer;
 }
 .btn:hover {
-    background-color: #7a3e3a;
+    background-color: #800000;
 }
 p {
     margin-top: 10px;

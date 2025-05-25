@@ -20,12 +20,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Check if user exists and if the password matches
         const user = users.find(u => u.email === email && u.password === password);
-
+        function showMessage(message){
+            document.getElementById('message').innerText = message;
+        }
         if (user) {
             alert("Login successful! Welcome, " + user.name);
             window.location.href = "Website for final project index.html"; // Redirect to homepage after successful login
         } else {
-            alert("Invalid email or password. Please try again.");
+            showMessage("Invalid email or password. Please try again.");
         }
     });
 });

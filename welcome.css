@@ -8,8 +8,8 @@ body {
 }
 
 .navbar {
-    background-color: #7b1f2d;
-    color: white;
+    background-color:white;
+    color:  #800000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,7 +23,7 @@ body {
 }
 
 .navbar a {
-    color: white;
+    color:  #800000;
     text-decoration: none;
     margin-left: 20px;
     font-weight: 500;
